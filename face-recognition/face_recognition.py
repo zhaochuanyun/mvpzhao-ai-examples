@@ -1,8 +1,8 @@
 from keras_vggface.vggface import VGGFace
 
 '''
-https://aboveintelligent.com/face-recognition-with-keras-and-opencv-2baf2a83b799
 https://github.com/rcmalli/keras-vggface
+https://aboveintelligent.com/face-recognition-with-keras-and-opencv-2baf2a83b799
 '''
 
 # Based on VGG16 architecture -> old paper(2015)
