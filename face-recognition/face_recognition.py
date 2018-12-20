@@ -1,3 +1,7 @@
+import numpy as np
+import matplotlib.pylab as plt
+from keras.preprocessing import image
+from keras_vggface import utils
 from keras_vggface.vggface import VGGFace
 
 '''
@@ -6,12 +10,19 @@ https://aboveintelligent.com/face-recognition-with-keras-and-opencv-2baf2a83b799
 '''
 
 # Based on VGG16 architecture -> old paper(2015)
-vggface = VGGFace(model='vgg16')
+vggface_model = VGGFace(
+    include_top=False,
+    input_shape=(224, 224, 3),
+    weights='vggface',
+    pooling='avg')
 
-# Based on RESNET50 architecture -> new paper(2017)
-vggface = VGGFace(model='resnet50')
+img = image.load_img('/Users/mvpzhao/Downloads/2.jpg', target_size=(224, 224))
 
-# Based on SENET50 architecture -> new paper(2017)
-vggface = VGGFace(model='senet50')
+plt.imshow(img)
+plt.show()
 
-vggface.summary()
+x = image.img_to_array(img)
+x = np.expand_dims(x, axis=0)
+x = utils.preprocess_input(x, version=1)  # or version=2
+preds = vggface_model.predict(x)
+print('Predicted:', utils.decode_predictions(preds))
