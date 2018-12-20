@@ -11,12 +11,12 @@ https://aboveintelligent.com/face-recognition-with-keras-and-opencv-2baf2a83b799
 
 # Based on VGG16 architecture -> old paper(2015)
 vggface_model = VGGFace(
-    include_top=False,
+    include_top=True,
     input_shape=(224, 224, 3),
     weights='vggface',
     pooling='avg')
 
-img = image.load_img('/Users/mvpzhao/Downloads/2.jpg', target_size=(224, 224))
+img = image.load_img('/home/mvpzhao/下载/zw.jpeg', target_size=(224, 224))
 
 plt.imshow(img)
 plt.show()
