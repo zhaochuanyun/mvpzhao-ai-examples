@@ -9,13 +9,11 @@ else:
     img = cv2.imread('/Users/mvpzhao/Downloads/vicky8.jpg')
 
 # 加载分类器
-face_haar = cv2.CascadeClassifier("../../data/haarcascades/haarcascade_frontalface_alt.xml")
-eye_haar = cv2.CascadeClassifier("../../data/haarcascades/haarcascade_eye.xml")
+face_haar = cv2.CascadeClassifier("/usr/local/lib/python3.6/site-packages/cv2/data/haarcascade_frontalface_alt.xml")
+eye_haar = cv2.CascadeClassifier("/usr/local/lib/python3.6/site-packages/cv2/data/haarcascade_eye.xml")
 
 # 把图像转为黑白图像
 gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-plt.imshow(gray_img)
-plt.show()
 
 # 检测图像中的所有脸
 faces = face_haar.detectMultiScale(gray_img, 1.3, 5)
