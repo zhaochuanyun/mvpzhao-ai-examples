@@ -12,19 +12,18 @@ https://blog.csdn.net/zhuquan945/article/details/53998793
 https://aboveintelligent.com/face-recognition-with-keras-and-opencv-2baf2a83b799
 '''
 
+img_path = None
+if 'captainMBP' in socket.gethostname():
+    img_path = '/Users/mvpzhao/data/vgg-face/faces_cut/validation/Kobe_Bryant/kobe.11.jpg'
+else:
+    img_path = '/home/mvpzhao/下载/timg.jpeg'
+
 # Based on VGG16 architecture
 vggface_model = VGGFace(
     model='vgg16',
     weights='vggface',
     include_top=True,
     input_shape=(224, 224, 3))
-
-img_path = None
-
-if 'captainMBP' in socket.gethostname():
-    img_path = '/Users/mvpzhao/data/vgg-face/faces/Abbie_Cornish/00000298.jpg'
-else:
-    img_path = '/home/mvpzhao/下载/timg.jpeg'
 
 img = image.load_img(img_path, target_size=(224, 224))
 
