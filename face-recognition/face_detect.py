@@ -1,32 +1,37 @@
-import sys
 import socket
 import cv2
-import matplotlib.pylab as plt
 
+'''
+https://blog.csdn.net/xingchenbingbuyu/article/details/51105159
+'''
+
+img = None
 if 'captainMBP' in socket.gethostname():
-    img = cv2.imread('/Users/mvpzhao/Downloads/vicky8.jpg')
+    img = cv2.imread('/Users/mvpzhao/data/vgg-face/faces/Abbie_Cornish/00000298.jpg')
 else:
     img = cv2.imread('/Users/mvpzhao/Downloads/vicky8.jpg')
 
 # 加载分类器
-face_haar = cv2.CascadeClassifier("/usr/local/lib/python3.6/site-packages/cv2/data/haarcascade_frontalface_alt.xml")
-eye_haar = cv2.CascadeClassifier("/usr/local/lib/python3.6/site-packages/cv2/data/haarcascade_eye.xml")
+face_cascade = cv2.CascadeClassifier('/usr/local/Cellar/opencv/3.4.3_2/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml')
+eye_cascade = cv2.CascadeClassifier('/usr/local/Cellar/opencv/3.4.3_2/share/OpenCV/haarcascades/haarcascade_eye.xml')
 
-# 把图像转为黑白图像
-gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-# 检测图像中的所有脸
-faces = face_haar.detectMultiScale(gray_img, 1.3, 5)
-for face_x, face_y, face_w, face_h in faces:
-    cv2.rectangle(img, (face_x, face_y), (face_x + face_w, face_y + face_h), (0, 255, 0), 2)
-    # 眼长在脸上
-    roi_gray_img = gray_img[face_y:face_y + face_h, face_x:face_x + face_w]
-    roi_img = img[face_y:face_y + face_h, face_x:face_x + face_w]
-    eyes = eye_haar.detectMultiScale(roi_gray_img, 1.3, 5)
-    for eye_x, eye_y, eye_w, eye_h in eyes:
-        cv2.rectangle(roi_img, (eye_x, eye_y), (eye_x + eye_w, eye_y + eye_h), (255, 0, 0), 2)
+# 探测图片中的人脸
+faces = face_cascade.detectMultiScale(gray, 1.1, 3, cv2.CASCADE_SCALE_IMAGE, (50, 50), (100, 100))
 
-cv2.imshow('img', img)
+print("发现{0}个人脸!".format(len(faces)))
+
+if len(faces) > 0:
+    for face_x, face_y, face_w, face_h in faces:
+        cv2.rectangle(img, (face_x, face_y), (face_x + face_w, face_y + face_h), (0, 255, 0), 2, 8, 0)
+
+        # roi_gray = gray[face_y:face_y + face_h, face_x:face_x + face_w]
+        # roi_color = img[face_y:face_y + face_h, face_x:face_x + face_w]
+        #
+        # eyes = eye_cascade.detectMultiScale(roi_gray, 1.1, 1, cv2.CASCADE_SCALE_IMAGE, (2, 2))
+        # for (ex, ey, ew, eh) in eyes:
+        #     cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
+
+cv2.imshow("img", img)
 cv2.waitKey(0)
-
-cv2.destroyAllWindows()

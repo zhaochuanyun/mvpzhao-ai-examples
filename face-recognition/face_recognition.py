@@ -22,7 +22,7 @@ vggface_model = VGGFace(
 img_path = None
 
 if 'captainMBP' in socket.gethostname():
-    img_path = '/Users/mvpzhao/Downloads/vicky8.jpg'
+    img_path = '/Users/mvpzhao/data/vgg-face/faces/Abbie_Cornish/00000298.jpg'
 else:
     img_path = '/home/mvpzhao/下载/timg.jpeg'
 
@@ -33,6 +33,6 @@ plt.show()
 
 x = image.img_to_array(img)
 x = np.expand_dims(x, axis=0)
-x = utils.preprocess_input(x, version=1)  # or version=2
+x = utils.preprocess_input(x, version=1)
 preds = vggface_model.predict(x)
 print('Predicted:', utils.decode_predictions(preds))
