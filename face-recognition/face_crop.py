@@ -2,6 +2,7 @@ import os
 import socket
 import numpy as np
 from scipy import misc
+from imutils import paths
 import tensorflow as tf
 import cv2
 import mtcnn.mtcnn_detect_face as mtcnn
@@ -57,7 +58,7 @@ def get_dataset(path):
 def get_image_paths(facedir):
     image_paths = []
     if os.path.isdir(facedir):
-        images = os.listdir(facedir)
+        images = list(paths.list_images(facedir))
         image_paths = [os.path.join(facedir, img) for img in images]
     return image_paths
 
@@ -94,6 +95,6 @@ with tf.Graph().as_default():
 
                 aligned = misc.imresize(cropped, (image_size, image_size), interp='bilinear')
 
-                idx = len(os.listdir(out_dir)) + 1
+                idx = len(list(paths.list_images(out_dir))) + 1
 
                 cv2.imwrite(os.path.join(out_dir, imageClass.name + '.' + str(idx) + '.jpg'), aligned)
