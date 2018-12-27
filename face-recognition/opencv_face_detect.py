@@ -9,7 +9,7 @@ https://blog.csdn.net/haohuajie1988/article/details/79163318
 img = None
 save_path = None
 if 'captainMBP' in socket.gethostname():
-    img = cv2.imread('/Users/mvpzhao/data/vgg-face/faces/Abbie_Cornish/00000298.jpg')
+    img = cv2.imread('/Users/mvpzhao/Pictures/dream-8.jpg')
     save_path = '/Users/mvpzhao/data/vgg-face/faces_cut/1.jpg'
 else:
     img = cv2.imread('/Users/mvpzhao/Downloads/vicky8.jpg')

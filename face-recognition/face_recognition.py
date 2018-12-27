@@ -14,7 +14,7 @@ https://aboveintelligent.com/face-recognition-with-keras-and-opencv-2baf2a83b799
 
 img_path = None
 if 'captainMBP' in socket.gethostname():
-    img_path = '/Users/mvpzhao/data/vgg-face/faces_cut/validation/Kobe_Bryant/kobe.11.jpg'
+    img_path = '/Users/mvpzhao/tools/python-workspace/star-recognition-train/python/img/test_0.jpg'
 else:
     img_path = '/home/mvpzhao/下载/timg.jpeg'
 
