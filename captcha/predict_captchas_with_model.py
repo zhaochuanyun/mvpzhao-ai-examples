@@ -9,7 +9,7 @@ from datasets_generate import resize_to_fit, find_letter_image_regions
 from datasets_generate import MODEL_LABELS_FILENAME
 from train_cnn_model import MODEL_FILENAME
 
-CAPTCHA_PREDICT_FOLDER = 'datasets/captcha_predict_images'
+CAPTCHA_PREDICT_FOLDER = '~/data/captcha/datasets/captcha_predict_images'
 
 
 def predict(model, predict_folder=CAPTCHA_PREDICT_FOLDER, lb_folder=MODEL_LABELS_FILENAME, pad=15):

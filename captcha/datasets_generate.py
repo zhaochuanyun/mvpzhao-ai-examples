@@ -9,10 +9,13 @@ from imutils import paths
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
 
-CAPTCHA_H5_FOLDER = 'datasets'
-CAPTCHA_IMAGE_FOLDER = 'datasets/captcha_original_images'
-LETTER_OUTPUT_FOLDER = 'datasets/extracted_letter_images'
-MODEL_LABELS_FILENAME = "datasets/model_labels.dat"
+"""
+数据集到百度网盘下载
+"""
+
+CAPTCHA_IMAGE_FOLDER = '~/data/captcha/datasets/captcha_original_images'
+LETTER_OUTPUT_FOLDER = '~/data/captcha/datasets/extracted_letter_images'
+MODEL_LABELS_FILENAME = '~/data/captcha/datasets/model_labels.dat'
 
 
 # Load hdf5 datasets
@@ -22,7 +25,7 @@ def load_datasets():
     labels = []
 
     # loop over the input images
-    for image_file in paths.list_images(LETTER_OUTPUT_FOLDER):
+    for image_file in paths.list_images(os.path.expanduser(LETTER_OUTPUT_FOLDER)):
         # Load the image and convert it to grayscale
         image = cv2.imread(image_file)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -50,15 +53,15 @@ def load_datasets():
 
     # Save the mapping from labels to one-hot encodings.
     # We'll need this later when we use the model to decode what it's predictions mean
-    with open(MODEL_LABELS_FILENAME, 'wb') as f:
+    with open(os.path.expanduser(MODEL_LABELS_FILENAME), 'wb') as f:
         pickle.dump(lb, f)
 
     X_train, X_test, Y_train, Y_test = train_test_split(data, labels, test_size=0.25, random_state=0)
     return X_train, Y_train, X_test, Y_test
 
 
-def captchas2letters(folder=CAPTCHA_IMAGE_FOLDER):
-    captcha_image_files = glob.glob(os.path.join(folder, '*'))
+def captchas2letters(src_folder=CAPTCHA_IMAGE_FOLDER, out_folder=LETTER_OUTPUT_FOLDER):
+    captcha_image_files = glob.glob(os.path.join(os.path.expanduser(src_folder), '*'))
 
     counts = {}
 
@@ -79,7 +82,7 @@ def captchas2letters(folder=CAPTCHA_IMAGE_FOLDER):
             letter_image = image[y - 2:y + h + 2, x - 2:x + w + 2]
 
             # Get the folder to save the image in
-            save_path = os.path.join(LETTER_OUTPUT_FOLDER, letter_text)
+            save_path = os.path.join(os.path.expanduser(out_folder), letter_text)
 
             # if the output directory does not exist, create it
             if not os.path.exists(save_path):
@@ -87,7 +90,7 @@ def captchas2letters(folder=CAPTCHA_IMAGE_FOLDER):
 
             # write the letter image to a file
             count = counts.get(letter_text, 1)
-            p = os.path.join(save_path, '{}.png'.format(str(count).zfill(6)))
+            p = os.path.join(os.path.expanduser(save_path), '{}.png'.format(str(count).zfill(6)))
             cv2.imwrite(p, letter_image)
 
             # increment the count for the current key
