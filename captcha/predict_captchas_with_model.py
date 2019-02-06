@@ -61,7 +61,7 @@ def predict(model, predict_folder=CAPTCHA_PREDICT_FOLDER, lb_folder=MODEL_LABELS
         # Print the captcha's text
         captcha_text = ''.join(predictions)
 
-        print('correct/predict CAPTCHA text is: {}'.format(captcha_text))
+        print('predict CAPTCHA text is: {}'.format(captcha_text))
 
         # Show the annotated image
         cv2.imshow('Output', output)
