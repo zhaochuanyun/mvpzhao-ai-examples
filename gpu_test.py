@@ -26,3 +26,6 @@ print("Shape:", shape, "Device:", device_name)
 print("Time taken:", datetime.now() - startTime)
 
 print("\n" * 5)
+
+tf.contrib.layers.l2_regularizer
+tf.log

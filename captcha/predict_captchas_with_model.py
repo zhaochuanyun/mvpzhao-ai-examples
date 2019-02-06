@@ -14,14 +14,14 @@ CAPTCHA_PREDICT_FOLDER = '~/data/captcha/datasets/captcha_predict_images'
 
 def predict(model, predict_folder=CAPTCHA_PREDICT_FOLDER, lb_folder=MODEL_LABELS_FILENAME, pad=15):
     # Load up the model labels (so we can translate model predictions to actual letters)
-    with open(lb_folder, 'rb') as f:
+    with open(os.path.expanduser(lb_folder), 'rb') as f:
         lb = pickle.load(f)
 
     # Grab some random CAPTCHA images to test against.
     # In the real world, you'd replace this section with code to grab a real
     # CAPTCHA image from a live website.
-    captcha_image_files = list(paths.list_images(predict_folder))
-    captcha_image_files = np.random.choice(captcha_image_files, size=(20,), replace=False)
+    captcha_image_files = list(paths.list_images(os.path.expanduser(predict_folder)))
+    captcha_image_files = np.random.choice(captcha_image_files, size=(5,), replace=False)
 
     for (idx, captcha_image_file) in enumerate(captcha_image_files):
         image, letter_image_regions = find_letter_image_regions(captcha_image_file, pad=pad)
@@ -70,5 +70,5 @@ def predict(model, predict_folder=CAPTCHA_PREDICT_FOLDER, lb_folder=MODEL_LABELS
 
 if __name__ == '__main__':
     # Load the trained neural network
-    model = load_model(MODEL_FILENAME)
+    model = load_model(os.path.expanduser(MODEL_FILENAME))
     predict(model)
